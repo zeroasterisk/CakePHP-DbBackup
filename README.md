@@ -1,5 +1,8 @@
 # CakePHP Plugin - Database Backup Plugin
 
+> **⚠️ Personal Hobby Project** — This is an independent, personal project by [Alan Blount](https://github.com/zeroasterisk). It is **not affiliated with, endorsed by, or supported by any employer, company, or organization**. No warranty; use at your own risk.
+
+
 This plugin can be run to backup from many **sources**
 
 * any configured databases for the hosting CakePHP app
