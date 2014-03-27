@@ -127,7 +127,31 @@ $config = array(
 				// no retain?  we delete after 1 day
 				'retain' => array(),
 			)
-		)
+		),
+
+		/**
+		 * Customize these based on your envionrment and needs
+		 * - replacements:
+		 *   - {{host}}
+		 *   - {{login}}
+		 *   - {{password}}
+		 *   - {{port}} (if set on the source config)
+		 *   - {{database}}
+		 *   - {{target}} = self:backupTempFilePath()
+		 *
+		 * NOTE: you can specify fill paths to commands if needed
+		 *   - '/usr/bin/mysqldump'
+		 *   - '/bin/gzip'
+		 *
+		 * NOTE: you should pipe mysqldump through gzip like:
+		 *   mysqldump ... -h{{host}} ... {{database}} | gzip -c > {{target}}
+		 */
+		'mysqldump_command' => 'mysqldump ' .
+			' --skip-lock-tables --create-options --add-drop-table ' .
+			'-h"{{host}}" -u"{{login}}" -p"{{password}}" ' .
+			// pipe directly through gzip
+			' | gzip -c > {{target}}',
+
 	),
 
 );

@@ -2,9 +2,9 @@
 /**
  *
  */
-App::uses('DbBackup', 'Lib');
-App::uses('DbBackupLog', 'Model');
-App::uses('DbBackupAction', 'Model');
+App::uses('DbBackup', 'DbBackup.Lib');
+App::uses('DbBackupLog', 'DbBackup.Model');
+App::uses('DbBackupAction', 'DbBackup.Model');
 Class DbBackupShell extends AppShell {
 	public $uses = array(
 		'DbBackup.DbBackupLog',
@@ -49,6 +49,22 @@ Class DbBackupShell extends AppShell {
 	}
 
 	public function backup() {
+		$map = DbBackup::map($this->params);
+		foreach ($map as $step) {
+			// backup to temp
+			$target = DbBackup::backupTempFilePath($step);
+			if (file_exists($target)) {
+				$this->info('backupToTemp skipped - file already exists: ' . $target);
+			} else {
+				$command = DbBackup::backupTempCommand($step, $target);
+				if (empty($command)) {
+					$this->info('backupToTemp skipped - command is blank: ' . $target);
+				}
+				$this->info($command);
+				$result = exec($command, $output);
+				debug(compact('command', 'result', 'output'));
+			}
+		}
 	}
 
 	public function verify() {
@@ -81,5 +97,8 @@ Class DbBackupShell extends AppShell {
 			'help' => __d('cake_console', 'Limit to this database'),
 			'short' => 'b'
 		));
+	}
+	public function info($text) {
+		$this->out("<info>$text</info>");
 	}
 }
