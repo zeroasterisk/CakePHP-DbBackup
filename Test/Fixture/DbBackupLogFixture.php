@@ -11,17 +11,16 @@ class DbBackupLogFixture extends CakeTestFixture {
  * @var array
  */
 	public $fields = array(
-		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary', 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'id' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 36, 'key' => 'primary'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'completed' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'is_success' => array('type' => 'boolean', 'null' => false, 'default' => '0', 'key' => 'index'),
-		'task' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'shell' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index'),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'task' => array('column' => 'task', 'unique' => 0),
+			'shell' => array('column' => 'shell', 'unique' => 0),
 			'is_success' => array('column' => 'is_success', 'unique' => 0)
 		),
-		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
 	);
 
 /**
@@ -35,7 +34,7 @@ class DbBackupLogFixture extends CakeTestFixture {
 			'created' => '2014-03-26 17:35:01',
 			'completed' => '2014-03-26 17:35:01',
 			'is_success' => 1,
-			'task' => 'Lorem ipsum dolor sit amet'
+			'shell' => 'all'
 		),
 	);
 

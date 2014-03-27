@@ -53,11 +53,19 @@ Class DbBackup {
 			'host' => null,
 			'login' => null,
 			'password' => null,
-			'database' => 'information_schema',
-			'encoding' => 'utf8',
+			'database' => null,
 			'prefix' => '',
 		);
-		foreach ($config['sources'] as $key => $source) {
+
+		if (empty($config['sources'])) {
+			$sources = array('default');
+		} elseif (is_string($config['sources'])) {
+			$sources = Hash::filter(explode(',', $config['sources']));
+		} else {
+			$sources = Hash::filter($config['sources']);
+		}
+
+		foreach ($sources as $key => $source) {
 			if (is_string($source)) {
 				$source = parse_url($source);
 				if (!empty($source['user'])) {
@@ -71,11 +79,33 @@ Class DbBackup {
 			$source = array_intersect_key($source, $default);
 			$source = Hash::filter($source);
 			unset($sources[$key]);
-			$key = strtolower(implode('-', $source));
-			$key = trim(preg_replace('#[^a-z0-9-]#', $key), '-');
+			$key = self::keyFromSource($source);
 			$sources[$key] = $source;
 		}
+
 		return $sources;
+	}
+
+	/**
+	 * Get a distinct key from a source array
+	 *  - human readable
+	 *  - no sensetive information
+	 *  - distinct
+	 *
+	 * @param array $source
+	 * @return string $key
+	 */
+	public static function keyFromSource($source) {
+		$exclude_keys = array(
+			'persistent',
+			'login',
+			'password',
+		);
+		$source = array_diff_key($source, array_flip($exclude_keys));
+		$key = strtolower(implode('-', $source));
+		$key = trim(preg_replace('#[^a-z0-9-]#', '', $key), '-');
+		$key = str_replace('database-', '', $key);
+		return $key;
 	}
 
 	/**

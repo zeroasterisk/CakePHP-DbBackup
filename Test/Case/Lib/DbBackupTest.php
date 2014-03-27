@@ -2,7 +2,6 @@
 App::uses('DbBackup', 'DbBackup.Lib');
 App::uses('DbBackupLog', 'DbBackup.Model');
 App::uses('DbBackupAction', 'DbBackup.Model');
-App::uses('DbBackupExclude', 'DbBackup.Model');
 
 /**
  * DbBackup (Lib) Test Case
@@ -18,7 +17,6 @@ class DbBackupTest extends CakeTestCase {
 	public $fixtures = array(
 		'plugin.db_backup.db_backup_action',
 		'plugin.db_backup.db_backup_log',
-		'plugin.db_backup.db_backup_exclude'
 	);
 
 	/**
@@ -42,6 +40,20 @@ class DbBackupTest extends CakeTestCase {
 	}
 
 	public function testBasics() {
+	}
+
+	public function testKeyFromSource() {
+		$this->assertEqual(DbBackup::keyFromSource(array()), '');
+		$input = array(
+			'datasource' => 'Database/Mysql',
+			'persistent' => false,
+			'host' => 'hostval',
+			'login' => 'loginval',
+			'password' => 'passwordval',
+			'database' => 'databaseval',
+			'prefix' => 'prefixval'
+		);
+		$this->assertEqual(DbBackup::keyFromSource($input), 'databasemysql-hostval-databaseval-prefixval');
 	}
 
 	public function testConfig() {

@@ -5,12 +5,10 @@
 App::uses('DbBackup', 'Lib');
 App::uses('DbBackupLog', 'Model');
 App::uses('DbBackupAction', 'Model');
-App::uses('DbBackupExclude', 'Model');
 Class DbBackupShell extends AppShell {
 	public $uses = array(
 		'DbBackup.DbBackupLog',
 		'DbBackup.DbBackupAction',
-		'DbBackup.DbBackupExclude',
 	);
 
 	public function main() {

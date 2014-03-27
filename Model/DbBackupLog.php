@@ -4,7 +4,6 @@ App::uses('AppModel', 'Model');
  * DbBackupLog Model
  *
  * @property DbBackupAction $DbBackupAction
- * @property DbBackupExclude $DbBackupExclude
  */
 class DbBackupLog extends AppModel {
 
@@ -24,7 +23,7 @@ class DbBackupLog extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'task' => array(
+		'Shell' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -57,19 +56,6 @@ class DbBackupLog extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'DbBackupExclude' => array(
-			'className' => 'DbBackupExclude',
-			'foreignKey' => 'db_backup_log_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
 	);
 
 }

@@ -17,7 +17,6 @@ class AllDbBackupTest extends CakeTestSuite {
 		'DbBackup' => array(
 			'Lib/DbBackup',
 			'Model/DbBackupLog',
-			'Model/DbBackupExclude',
 			'Model/DbBackupAction',
 		)
 	);

@@ -37,7 +37,7 @@ Destination to Rackspace Cloud Files:
 
 Setup Schema
 
-    ./cake schema create -p DbBackup db_backup
+    ./cake schema create -p DbBackup
 
 
 ## Config
